@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Department</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f5f3;
+      margin: 0;
+      padding: 25px;
+    }
+    header {
+      background: #0f7b3a;
+      color: white;
+      padding: 22px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 20px 0;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    table {
+      width: 100%;
+      background: white;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background: #dcefe2;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Smart Department</h1>
+    <p>Academic Management System</p>
+  </header>
+
+  <h2>Student Directory</h2>
+  <input id="search" placeholder="Search student name or register number">
+
+  <table>
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Student Name</th>
+        <th>Register Number</th>
+      </tr>
+    </thead>
+    <tbody id="studentList"></tbody>
+  </table>
+
+  <script>
+    const students = [
+      { name: "Abhinav S", reg: "71812411001" },
+      { name: "Mokshida S", reg: "71812411037" }
+    ].sort((a, b) => a.name.localeCompare(b.name));
+
+    const search = document.getElementById("search");
+    const list = document.getElementById("studentList");
+
+    function displayStudents() {
+      const query = search.value.toLowerCase().trim();
+
+      const filtered = students.filter(s =>
+        s.name.toLowerCase().includes(query) ||
+        s.reg.includes(query)
+      );
+
+      list.innerHTML = "";
+
+      filtered.forEach((s, i) => {
+        const row = document.createElement("tr");
+        [i + 1, s.name, s.reg].forEach(value => {
+          const cell = document.createElement("td");
+          cell.textContent = value;
+          row.appendChild(cell);
+        });
+        list.appendChild(row);
+      });
+    }
+
+    search.addEventListener("input", displayStudents);
+    displayStudents();
+  </script>
+</body>
+</html>
